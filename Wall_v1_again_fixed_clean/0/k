@@ -1,0 +1,74 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      k;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+//#include        "include/initialConditions"
+
+dimensions      [0 2 -2 0 0 0 0];
+
+internalField   uniform 0.228;
+
+boundaryField
+{
+    //- Set patchGroups for constraint patches
+   // #includeEtc "caseDicts/setConstraintTypes"
+
+    //- Define inlet conditions
+    //#include "include/fixedInlet"
+   inlet
+{
+    type  fixedValue;
+    value $internalField;
+}
+
+    
+    outlet
+    {
+        type            inletOutlet;
+        inletValue      $internalField;
+        value           $internalField;
+    }
+
+    ground
+    {
+        type            kqRWallFunction;
+        value           $internalField;
+    }
+
+
+     buildings
+{
+        type            kqRWallFunction;
+        value           $internalField;
+    }
+
+     WERFL
+{
+        type            kqRWallFunction;
+        value           $internalField;
+    }
+
+
+frontAndBack
+{
+        type            kqRWallFunction;
+        value           $internalField;
+    }
+
+
+
+}
+
+// ************************************************************************* //
